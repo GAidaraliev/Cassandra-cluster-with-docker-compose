@@ -1,0 +1,72 @@
+version: '3.8'
+services:
+  cassandra-1:
+    container_name: cassandra-1
+    image: cassandra:latest
+    restart: always
+    volumes:
+      - /cassandra-docker-compose/cassandra-1:/var/lib/cassandra
+    environment:
+      - CASSANDRA_BROADCAST_ADDRESS=cassandra-1
+      - CASSANDRA_SEEDS=cassandra-1
+      - CASSANDRA_START_RPC=true
+      - CASSANDRA_CLUSTER_NAME=cassandra-cluster
+      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
+      - CASSANDRA_DC=datacenter-1
+    networks:
+      cassandra-net:
+        ipv4_address: 192.168.1.200
+    ports:
+      - "7000:7000" 
+      - "9042:9042" 
+    
+  cassandra-2:
+    container_name: cassandra-2
+    image: cassandra:latest
+    restart: always
+    volumes:
+      - /cassandra-docker-compose/cassandra-2:/var/lib/cassandra
+    environment:
+      - CASSANDRA_SEEDS=cassandra-1
+      - CASSANDRA_START_RPC=true 
+      - CASSANDRA_CLUSTER_NAME=cassandra-cluster
+      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
+      - CASSANDRA_DC=datacenter-1
+    networks:
+      cassandra-net:
+        ipv4_address: 192.168.1.201
+    ports:
+      - "7001:7000"
+      - "9043:9042"
+    depends_on:
+      - cassandra-1
+    
+  cassandra-3:
+    container_name: cassandra-3
+    image: cassandra:latest
+    restart: always
+    volumes:
+      - /cassandra-docker-compose/cassandra-3:/var/lib/cassandra
+    environment:
+      - CASSANDRA_SEEDS=cassandra-1
+      - CASSANDRA_START_RPC=true
+      - CASSANDRA_CLUSTER_NAME=cassandra-cluster
+      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
+      - CASSANDRA_DC=datacenter-1
+    networks:
+      cassandra-net:
+        ipv4_address: 192.168.1.202
+    ports:
+      - "7002:7000"
+      - "9044:9042"
+    depends_on:
+      - cassandra-2
+
+networks:
+  cassandra-net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 192.168.1.0/24   
+        gateway: 192.168.1.197
