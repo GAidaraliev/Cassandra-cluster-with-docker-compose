@@ -37,7 +37,7 @@ docker exec -ti {name of node} cqlsh
 ````
 docker exec -ti {name of node} cqlsh {IP node}
 ````
-![alt text](img/screen6.png)
+![alt text](img/screen7.png)
 
 *Либо можно также с помощью утилиты `cqlsh`*
 
