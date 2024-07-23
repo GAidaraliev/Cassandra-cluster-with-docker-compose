@@ -35,6 +35,4 @@ docker exec -ti {name of node} cqlsh {IP node}
 ````
 ![alt text](img/screen7.png)
 
-*Либо можно также с помощью утилиты `cqlsh`*
-
 - После тестирования кластера в Docker Compose, можно остановить и удалить созданные контейнеры с помощью команды `docker-compose down`
