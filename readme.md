@@ -35,7 +35,7 @@ docker exec -ti {name of node} cqlsh
 ````
 ![alt text](img/screen5.png)
 ````
-docker exec -ti cassandra-1 cqlsh {IP node}
+docker exec -ti {name of node} cqlsh {IP node}
 ````
 ![alt text](img/screen6.png)
 
